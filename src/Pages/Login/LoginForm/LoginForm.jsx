@@ -1,43 +1,58 @@
 import { func } from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
+import Input from "../../../Components/Forms/Input/Input";
+import Button from "../../../Components/Forms/Button/Button";
+import useForm from "../../../Hooks/useForm/useForm";
+import Error from "../../../Components/Elementos de interface/Error/Error";
+import styles from "./LoginForm.module.css";
+import styleBtn from "../../../Components/Forms/Button/Button.module.css"
+import { UserContext } from "../../../UserContext";
+
+
+
+
 
 const LoginForm = () =>{
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const username = useForm();
+  const password = useForm();
 
-  function handleSubmit(event){
+  const {userLogin, error, loading} = React.useContext(UserContext); 
+
+  async function handleSubmit(event){
     event.preventDefault();
-    console.log(username);
-    fetch('https://dogsapi.origamid.dev/json/jwt-auth/v1/token', {
-      method:'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({username, password}),
-    }).then((response) =>{
-      console.log(response);
-      return response.json();
-    }).then((json) =>{
-      console.log(json)
-      return json;
-    })
+   if(username.validate() && password.validate()){
+     userLogin(username.value, password.value); 
   }
+}
+    
   return (
-  <section>
-    <h1>Login</h1>
-    <form action="" onSubmit={handleSubmit}>
-      <input type="text"
-        value={username}
-        onChange={({target}) => setUsername(target.value)}
+  <section className="animeLeft">
+    <h1 className="title">Login</h1>
+    <form action="" onSubmit={handleSubmit} className={styles.form}>
+      <Input
+        label="Usuario"
+        type="text"
+        name="username"
+        {...username}
       />
-      <input type="text"
-        value={password}
-        onChange={({target}) => setPassword(target.value)}
+      <Input
+        label="Senha"
+        type="password"
+        name="password"
+        {...password}
       />
-      <button>Entrar</button>
+      {loading ? <Button disabled>Carregando...</Button>: <Button>Entrar</Button>}
+      <Error error={error}/>
+      {error && <p>{error}</p>}
     </form>
-    <Link to="/login/criar">Cadastro</Link>
+    <Link to="/login/perdeu" className={styles.perdeu}>Perdeu a senha?</Link>
+    <div className={styles.cadastro}>
+      <h2 className={styles.subtitle}>Cadastre-se</h2>
+      <p>Ainda não possui conta? cadastre-se no site.</p>
+      <Link to="/login/criar" className={styleBtn.button}>Cadastro</Link>
+    </div>
+  
   </section>
   )
 }

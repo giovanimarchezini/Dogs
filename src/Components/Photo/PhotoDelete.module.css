@@ -1,0 +1,17 @@
+.delete{
+  background: transparent;
+  line-height: 1;
+  border: none;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.delete svg{
+  max-width: 1.2rem;
+  width: 100%;
+}
+.delete:hover,
+.delete:focus{
+  transform: translateY(-2px);
+  outline: none;
+}
