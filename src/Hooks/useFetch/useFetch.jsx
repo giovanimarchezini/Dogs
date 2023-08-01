@@ -17,8 +17,7 @@ const useFetch = () => {
       console.log(response);
     }catch(err){
       json = null;
-      console.log(err.message)
-      setError('Dados Incompletos');
+      setError(err.message);
     }finally{
       setData(json);
       setLoading(false);

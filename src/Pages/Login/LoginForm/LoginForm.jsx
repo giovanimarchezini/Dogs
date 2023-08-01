@@ -27,7 +27,7 @@ const LoginForm = () =>{
 }
     
   return (
-  <section className="animeLeft">
+  <div className="animeLeft">
     <h1 className="title">Login</h1>
     <form action="" onSubmit={handleSubmit} className={styles.form}>
       <Input
@@ -44,7 +44,6 @@ const LoginForm = () =>{
       />
       {loading ? <Button disabled>Carregando...</Button>: <Button>Entrar</Button>}
       <Error error={error}/>
-      {error && <p>{error}</p>}
     </form>
     <Link to="/login/perdeu" className={styles.perdeu}>Perdeu a senha?</Link>
     <div className={styles.cadastro}>
@@ -53,7 +52,7 @@ const LoginForm = () =>{
       <Link to="/login/criar" className={styleBtn.button}>Cadastro</Link>
     </div>
   
-  </section>
+  </div>
   )
 }
 
